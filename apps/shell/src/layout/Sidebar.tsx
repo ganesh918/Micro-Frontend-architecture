@@ -41,11 +41,10 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
         color: 'var(--color-sidebar-text-active)',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'transform var(--transition-smooth), box-shadow var(--transition-smooth), background-color var(--transition-smooth), color var(--transition-smooth)',
+        transition: 'transform var(--transition-smooth), box-shadow var(--transition-smooth), background var(--transition-smooth), color var(--transition-smooth), border-color var(--transition-smooth)',
         overflow: 'hidden',
         zIndex: isMobile ? 100 : 50,
         transform: open ? 'translateX(0)' : 'translateX(-100%)',
-        boxShadow: open ? 'var(--shadow-lg)' : 'none',
         borderRight: '1px solid var(--color-sidebar-border)',
       }}
     >
@@ -74,7 +73,7 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
               }
               style={({ isActive }) => ({
                 color: isActive ? 'var(--color-sidebar-text-active)' : 'var(--color-sidebar-text)',
-                background: isActive ? 'var(--color-sidebar-hover)' : 'transparent',
+                background: isActive ? 'var(--color-sidebar-active-bg)' : 'transparent',
               })}
             >
               <span className="sidebar-nav-icon">{iconMap[item.icon]}</span>
