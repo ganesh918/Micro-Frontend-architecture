@@ -1,7 +1,8 @@
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { AuthSession, LoginCredentials, SignupCredentials, User } from '@mfd/shared-types';
-import { api, getRuntimeSingleton, publishEvent } from '@mfd/shared-utils';
+import { api, ApiClientError, getRuntimeSingleton, publishEvent } from '@mfd/shared-utils';
+import { loginFromLocalAccount, normalizeEmail, saveLocalAccount } from './localAccounts';
 
 interface AuthState {
   session: AuthSession | null;
@@ -29,12 +30,28 @@ function createAuthStore(): AuthStore {
 
         login: async (credentials) => {
           set({ isLoading: true, error: null });
+          const payload = {
+            email: normalizeEmail(credentials.email),
+            password: credentials.password,
+          };
+
           try {
-            const session = await api.post<AuthSession>('/auth/login', credentials, { skipAuth: true });
+            const session = await api.post<AuthSession>('/auth/login', payload, { skipAuth: true });
             set({ session, isAuthenticated: true, isLoading: false });
             publishEvent('auth:login', { userId: session.user.id }, 'auth');
             publishEvent('toast:show', { message: `Welcome back, ${session.user.name}!`, type: 'success' }, 'auth');
           } catch (err) {
+            const canUseLocalFallback =
+              err instanceof ApiClientError && err.code === 'AUTH_FAILED';
+            const localSession = canUseLocalFallback ? loginFromLocalAccount(payload) : null;
+
+            if (localSession) {
+              set({ session: localSession, isAuthenticated: true, isLoading: false });
+              publishEvent('auth:login', { userId: localSession.user.id }, 'auth');
+              publishEvent('toast:show', { message: `Welcome back, ${localSession.user.name}!`, type: 'success' }, 'auth');
+              return;
+            }
+
             const message = err instanceof Error ? err.message : 'Login failed';
             set({ error: message, isLoading: false, isAuthenticated: false });
             throw err;
@@ -43,8 +60,15 @@ function createAuthStore(): AuthStore {
 
         signup: async (credentials) => {
           set({ isLoading: true, error: null });
+          const payload = {
+            name: credentials.name.trim(),
+            email: normalizeEmail(credentials.email),
+            password: credentials.password,
+          };
+
           try {
-            const session = await api.post<AuthSession>('/auth/signup', credentials, { skipAuth: true });
+            const session = await api.post<AuthSession>('/auth/signup', payload, { skipAuth: true });
+            saveLocalAccount(payload, session.user);
             set({ session, isAuthenticated: true, isLoading: false });
             publishEvent('auth:login', { userId: session.user.id }, 'auth');
             publishEvent('toast:show', { message: `Welcome, ${session.user.name}!`, type: 'success' }, 'auth');

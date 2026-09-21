@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
+import { createAccountStore } from './store.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -32,7 +33,7 @@ app.use(authenticate);
 
 const delay = (ms = 400) => new Promise((r) => setTimeout(r, ms));
 
-const users = [
+const SEED_USERS = [
   { id: '1', email: 'admin@mfd.io', name: 'Alex Admin', role: 'admin', department: 'Engineering', status: 'active', createdAt: '2024-01-15T10:00:00Z', lastLogin: '2025-09-17T08:30:00Z' },
   { id: '2', email: 'manager@mfd.io', name: 'Morgan Manager', role: 'manager', department: 'Operations', status: 'active', createdAt: '2024-03-20T10:00:00Z', lastLogin: '2025-09-16T14:20:00Z' },
   { id: '3', email: 'viewer@mfd.io', name: 'Victor Viewer', role: 'viewer', department: 'Sales', status: 'active', createdAt: '2024-06-10T10:00:00Z', lastLogin: '2025-09-15T09:00:00Z' },
@@ -42,11 +43,21 @@ const users = [
 ];
 
 /** @type {Record<string, { password: string, userId: string }>} */
-const credentials = {
+const SEED_CREDENTIALS = {
   'admin@mfd.io': { password: 'admin123', userId: '1' },
   'manager@mfd.io': { password: 'manager123', userId: '2' },
   'viewer@mfd.io': { password: 'viewer123', userId: '3' },
 };
+
+const accountStore = createAccountStore(SEED_USERS, SEED_CREDENTIALS);
+
+function getUsers() {
+  return accountStore.getUsers();
+}
+
+function normalizeEmail(email) {
+  return email?.trim().toLowerCase() ?? '';
+}
 
 let notifications = [
   { id: 'n1', title: 'System Update', message: 'Dashboard v2.1 deployed successfully.', type: 'success', read: false, createdAt: '2025-09-17T07:00:00Z' },
@@ -91,21 +102,22 @@ function paginate(arr, page = 1, pageSize = 10) {
 app.post('/api/auth/signup', async (req, res) => {
   await delay();
   const { name, email, password } = req.body;
+  const normalizedEmail = normalizeEmail(email);
 
-  if (!name?.trim() || !email || !password) {
+  if (!name?.trim() || !normalizedEmail || !password) {
     return res.status(400).json({ message: 'Name, email, and password are required', code: 'VALIDATION_ERROR' });
   }
   if (password.length < 6) {
     return res.status(400).json({ message: 'Password must be at least 6 characters', code: 'VALIDATION_ERROR' });
   }
-  if (credentials[email.toLowerCase()]) {
+  if (accountStore.findCredentials(normalizedEmail)) {
     return res.status(409).json({ message: 'An account with this email already exists', code: 'EMAIL_EXISTS' });
   }
 
   const id = String(Date.now());
   const user = {
     id,
-    email: email.toLowerCase(),
+    email: normalizedEmail,
     name: name.trim(),
     role: 'viewer',
     department: 'General',
@@ -114,8 +126,7 @@ app.post('/api/auth/signup', async (req, res) => {
     lastLogin: new Date().toISOString(),
   };
 
-  users.push(user);
-  credentials[user.email] = { password, userId: id };
+  accountStore.registerUser(user, password);
 
   activities.unshift({
     id: `a${Date.now()}`,
@@ -132,11 +143,12 @@ app.post('/api/auth/signup', async (req, res) => {
 app.post('/api/auth/login', async (req, res) => {
   await delay();
   const { email, password } = req.body;
-  const cred = credentials[email?.toLowerCase()];
+  const normalizedEmail = normalizeEmail(email);
+  const cred = accountStore.findCredentials(normalizedEmail);
   if (!cred || cred.password !== password) {
     return res.status(401).json({ message: 'Invalid email or password', code: 'AUTH_FAILED' });
   }
-  const user = users.find((u) => u.id === cred.userId);
+  const user = accountStore.findUserById(cred.userId);
   if (!user) {
     return res.status(401).json({ message: 'Invalid email or password', code: 'AUTH_FAILED' });
   }
@@ -147,7 +159,7 @@ app.post('/api/auth/login', async (req, res) => {
 app.post('/api/auth/logout', (_req, res) => res.status(204).end());
 app.post('/api/auth/refresh', async (req, res) => {
   await delay(200);
-  const user = users[0];
+  const user = getUsers()[0];
   res.json({ user, tokens: createTokens(user.id) });
 });
 
@@ -233,7 +245,7 @@ app.get('/api/dashboard/summary', async (_req, res) => {
 
 app.get('/api/users', async (req, res) => {
   await delay();
-  let filtered = [...users];
+  let filtered = [...getUsers()];
   const { search, status, role, page = 1, pageSize = 10 } = req.query;
   if (search) {
     const q = String(search).toLowerCase();
@@ -246,13 +258,14 @@ app.get('/api/users', async (req, res) => {
 
 app.get('/api/users/:id', async (req, res) => {
   await delay(200);
-  const user = users.find((u) => u.id === req.params.id);
+  const user = getUsers().find((u) => u.id === req.params.id);
   if (!user) return res.status(404).json({ message: 'User not found' });
   res.json(user);
 });
 
 app.put('/api/users/:id', async (req, res) => {
   await delay();
+  const users = getUsers();
   const idx = users.findIndex((u) => u.id === req.params.id);
   if (idx === -1) return res.status(404).json({ message: 'User not found' });
   users[idx] = { ...users[idx], ...req.body, id: users[idx].id };
@@ -261,6 +274,7 @@ app.put('/api/users/:id', async (req, res) => {
 
 app.delete('/api/users/:id', async (req, res) => {
   await delay();
+  const users = getUsers();
   const idx = users.findIndex((u) => u.id === req.params.id);
   if (idx === -1) return res.status(404).json({ message: 'User not found' });
   users.splice(idx, 1);

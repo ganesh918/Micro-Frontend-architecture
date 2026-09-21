@@ -10,3 +10,6 @@ coverage
 .vite
 .turbo
 api/server.js
+api/store.js
+apps/api-server/data/store.json
+.vercel

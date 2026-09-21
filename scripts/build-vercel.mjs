@@ -43,6 +43,10 @@ if (!existsSync(apiServerSrc)) {
 }
 
 cpSync(apiServerSrc, path.join(apiDir, 'server.js'));
+cpSync(
+  path.join(root, 'apps/api-server/src/store.js'),
+  path.join(apiDir, 'store.js')
+);
 
 for (const { module, dest } of remotes) {
   const src = path.join(root, 'modules', module, 'dist');
