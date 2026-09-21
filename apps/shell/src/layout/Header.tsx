@@ -8,12 +8,13 @@ import type { Notification } from '@mfd/shared-types';
 
 interface HeaderProps {
   onMenuClick: () => void;
+  onLogout: () => void;
 }
 
-export function Header({ onMenuClick }: HeaderProps) {
+export function Header({ onMenuClick, onLogout }: HeaderProps) {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const { session, logout } = useAuthStore();
+  const { session } = useAuthStore();
   const user = session?.user;
 
   const { data: notifications } = useQuery({
@@ -103,7 +104,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           variant="ghost"
           size="sm"
           leftIcon={<LogOut size={16} />}
-          onClick={logout}
+          onClick={onLogout}
           aria-label="Logout"
         >
           {!isMobile && 'Logout'}

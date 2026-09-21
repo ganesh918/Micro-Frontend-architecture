@@ -6,6 +6,7 @@ import {
   Bell,
   X,
   Layers,
+  LogOut,
 } from 'lucide-react';
 import { useIsMobile } from '@mfd/shared-utils';
 import { APP_NAV_ITEMS } from '@mfd/shared-auth';
@@ -21,9 +22,10 @@ interface SidebarProps {
   open: boolean;
   onClose: () => void;
   badges: Record<string, number>;
+  onLogout: () => void;
 }
 
-export function Sidebar({ open, onClose, badges }: SidebarProps) {
+export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
   const isMobile = useIsMobile();
   const navItems = APP_NAV_ITEMS;
 
@@ -97,7 +99,21 @@ export function Sidebar({ open, onClose, badges }: SidebarProps) {
         })}
       </nav>
 
-      <div style={{ padding: '16px 24px', borderTop: '1px solid rgba(255,255,255,0.08)', fontSize: '12px', color: '#64748b' }}>
+      <div style={{ padding: '12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <button
+          type="button"
+          className="sidebar-nav-link sidebar-nav-link--logout"
+          onClick={() => {
+            onLogout();
+            if (isMobile) onClose();
+          }}
+        >
+          <span className="sidebar-nav-icon"><LogOut size={20} /></span>
+          <span style={{ flex: 1 }}>Logout</span>
+        </button>
+      </div>
+
+      <div style={{ padding: '12px 24px 16px', fontSize: '12px', color: '#64748b' }}>
         Micro-Frontend v1.0
       </div>
     </aside>

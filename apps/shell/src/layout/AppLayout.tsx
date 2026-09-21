@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useIsMobile } from '@mfd/shared-utils';
 import { subscribeEvent } from '@mfd/shared-utils';
+import { useAuthStore } from '@mfd/shared-auth';
+import { LogoutConfirmModal } from '../components/LogoutConfirmModal';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 
@@ -9,6 +11,8 @@ export function AppLayout() {
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
   const [badges, setBadges] = useState<Record<string, number>>({});
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const logout = useAuthStore((s) => s.logout);
 
   useEffect(() => {
     setSidebarOpen(!isMobile);
@@ -38,6 +42,7 @@ export function AppLayout() {
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         badges={badges}
+        onLogout={() => setLogoutConfirmOpen(true)}
       />
       <div
         style={{
@@ -49,7 +54,10 @@ export function AppLayout() {
           transition: 'margin-left var(--transition-smooth)',
         }}
       >
-        <Header onMenuClick={() => setSidebarOpen((o) => !o)} />
+        <Header
+          onMenuClick={() => setSidebarOpen((o) => !o)}
+          onLogout={() => setLogoutConfirmOpen(true)}
+        />
         <main
           style={{
             flex: 1,
@@ -59,6 +67,14 @@ export function AppLayout() {
           <Outlet />
         </main>
       </div>
+      <LogoutConfirmModal
+        open={logoutConfirmOpen}
+        onClose={() => setLogoutConfirmOpen(false)}
+        onConfirm={() => {
+          logout();
+          setLogoutConfirmOpen(false);
+        }}
+      />
       {isMobile && sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
