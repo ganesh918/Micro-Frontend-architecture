@@ -8,6 +8,7 @@ export type AppEvents = {
   'auth:session-expired': ModuleEvent<null>;
   'notification:new': ModuleEvent<{ count: number }>;
   'notification:read': ModuleEvent<{ id: string }>;
+  'user:created': ModuleEvent<{ userId: string }>;
   'user:updated': ModuleEvent<{ userId: string }>;
   'user:deleted': ModuleEvent<{ userId: string }>;
   'dashboard:refresh': ModuleEvent<null>;

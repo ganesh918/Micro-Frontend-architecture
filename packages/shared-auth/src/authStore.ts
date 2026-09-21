@@ -71,6 +71,7 @@ function createAuthStore(): AuthStore {
             saveLocalAccount(payload, session.user);
             set({ session, isAuthenticated: true, isLoading: false });
             publishEvent('auth:login', { userId: session.user.id }, 'auth');
+            publishEvent('user:created', { userId: session.user.id }, 'auth');
             publishEvent('toast:show', { message: `Welcome, ${session.user.name}!`, type: 'success' }, 'auth');
           } catch (err) {
             const message = err instanceof Error ? err.message : 'Signup failed';

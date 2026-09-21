@@ -100,6 +100,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
 
+    const unsubCreated = subscribeEvent('user:created', () => {
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+    });
+
     const unsubUpdate = subscribeEvent('user:updated', () => {
 
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
@@ -120,7 +124,7 @@ export default function DashboardPage() {
 
     });
 
-    return () => { unsubUpdate(); unsubDelete(); unsubRefresh(); };
+    return () => { unsubCreated(); unsubUpdate(); unsubDelete(); unsubRefresh(); };
 
   }, [queryClient]);
 

@@ -29,4 +29,14 @@ describe('eventBus', () => {
 
     expect(handler.mock.calls[0][0].payload.userId).toBe('42');
   });
+
+  it('supports user created events from auth module', () => {
+    const handler = vi.fn();
+    subscribeEvent('user:created', handler);
+
+    publishEvent('user:created', { userId: '99' }, 'auth');
+
+    expect(handler.mock.calls[0][0].payload.userId).toBe('99');
+    expect(handler.mock.calls[0][0].source).toBe('auth');
+  });
 });

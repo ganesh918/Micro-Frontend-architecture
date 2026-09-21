@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Search, Pencil, Trash2 } from 'lucide-react';
-import { api, publishEvent, useDebounce, useIsMobile } from '@mfd/shared-utils';
+import { api, publishEvent, subscribeEvent, useDebounce, useIsMobile } from '@mfd/shared-utils';
 import type { PaginatedResponse, User } from '@mfd/shared-types';
 import {
   Avatar, Badge, Button, Card, EmptyState, ErrorState, Input, Modal, Select,
@@ -30,7 +30,15 @@ export default function UsersPage() {
         page,
         pageSize: 10,
       }),
+    refetchOnMount: 'always',
   });
+
+  useEffect(() => {
+    const unsubCreated = subscribeEvent('user:created', () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    });
+    return unsubCreated;
+  }, [queryClient]);
 
   const updateMutation = useMutation({
     mutationFn: (user: User) => api.put<User>(`/users/${user.id}`, user),
