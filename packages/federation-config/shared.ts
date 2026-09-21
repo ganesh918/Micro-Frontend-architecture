@@ -6,8 +6,6 @@ export const federationShared = {
   'react-router-dom': { singleton: true, requiredVersion: '^6.28.2' },
   '@tanstack/react-query': { singleton: true, requiredVersion: '^5.66.0' },
   zustand: { singleton: true, requiredVersion: '^5.0.3' },
-  mitt: { singleton: true, requiredVersion: '^3.0.1' },
-  'lucide-react': { singleton: true, requiredVersion: '^0.469.0' },
 };
 
 const REMOTE_PORTS: Record<string, number> = {
