@@ -7,11 +7,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
 const remotes = [
-  { module: 'auth', dest: 'auth' },
-  { module: 'dashboard', dest: 'dashboard' },
-  { module: 'user-management', dest: 'user-management' },
-  { module: 'analytics', dest: 'analytics' },
-  { module: 'notifications', dest: 'notifications' },
+  { module: 'auth', dest: 'remotes/auth' },
+  { module: 'dashboard', dest: 'remotes/dashboard' },
+  { module: 'user-management', dest: 'remotes/user-management' },
+  { module: 'analytics', dest: 'remotes/analytics' },
+  { module: 'notifications', dest: 'remotes/notifications' },
 ];
 
 function run(command, extraEnv = {}) {

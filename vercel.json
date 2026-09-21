@@ -12,6 +12,6 @@
   },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!remotes/|assets/|api/).*)", "destination": "/index.html" }
   ]
 }

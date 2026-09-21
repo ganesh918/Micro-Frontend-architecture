@@ -16,12 +16,13 @@ const REMOTE_PORTS: Record<string, number> = {
   notifications: 5005,
 };
 
+/** Prefixed to avoid colliding with shell client routes like /dashboard, /analytics */
 const REMOTE_PATHS: Record<string, string> = {
-  auth: '/auth',
-  dashboard: '/dashboard',
-  userManagement: '/user-management',
-  analytics: '/analytics',
-  notifications: '/notifications',
+  auth: '/remotes/auth',
+  dashboard: '/remotes/dashboard',
+  userManagement: '/remotes/user-management',
+  analytics: '/remotes/analytics',
+  notifications: '/remotes/notifications',
 };
 
 export function getRemoteEntries(baseUrl?: string, isProd = import.meta.env?.PROD): Record<string, string> {
