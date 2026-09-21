@@ -52,7 +52,7 @@ export const TrendBarChart = memo(function TrendBarChart({
                     flexShrink: 0,
                     minHeight: height > 0 ? '4px' : 0,
                     height: `${height}px`,
-                    background: 'linear-gradient(180deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
+                    background: 'var(--color-chart-gradient)',
                   }}
                 />
                 {showSecondary && point.secondary != null && (

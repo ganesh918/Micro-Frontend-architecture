@@ -16,7 +16,7 @@ const deviceIcons: Record<string, React.ReactNode> = {
 const deviceColors: Record<string, string> = {
   Desktop: 'var(--color-primary)',
   Mobile: 'var(--color-secondary)',
-  Tablet: 'var(--color-success)',
+  Tablet: 'var(--color-accent)',
 };
 
 export const DeviceBreakdown = memo(function DeviceBreakdown({ devices }: DeviceBreakdownProps) {

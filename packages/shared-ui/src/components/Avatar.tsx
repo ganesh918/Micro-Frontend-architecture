@@ -13,7 +13,7 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-const colors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)', 'var(--color-warning)', 'var(--color-error)', 'var(--color-accent)'];
+const colors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-accent)', 'var(--color-success)', 'var(--color-tertiary)', 'var(--color-error)'];
 
 function getColor(name: string): string {
   let hash = 0;

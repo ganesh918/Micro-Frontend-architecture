@@ -11,8 +11,8 @@ interface ActivityFeedProps {
 const iconMap: Record<ActivityItem['type'], { icon: React.ReactNode; color: string }> = {
   user: { icon: <User size={14} />, color: 'var(--color-primary)' },
   system: { icon: <RefreshCw size={14} />, color: 'var(--color-secondary)' },
-  alert: { icon: <AlertTriangle size={14} />, color: 'var(--color-warning)' },
-  update: { icon: <Settings size={14} />, color: 'var(--color-success)' },
+  alert: { icon: <AlertTriangle size={14} />, color: 'var(--color-accent)' },
+  update: { icon: <Settings size={14} />, color: 'var(--color-tertiary)' },
 };
 
 export const ActivityFeed = memo(function ActivityFeed({ activities, formatTime }: ActivityFeedProps) {

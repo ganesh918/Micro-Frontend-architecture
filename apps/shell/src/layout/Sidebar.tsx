@@ -38,7 +38,6 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
         left: 0,
         width: 'var(--sidebar-width)',
         height: '100vh',
-        background: 'var(--color-sidebar)',
         color: 'var(--color-sidebar-text-active)',
         display: 'flex',
         flexDirection: 'column',
