@@ -597,6 +597,20 @@ textarea {
   }
 }
 
+/* ─── User management ─── */
+
+.mfd-users-page {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.mfd-text-truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* ─── Reduced motion ─── */
 
 @media (prefers-reduced-motion: reduce) {

@@ -40,6 +40,16 @@ const SEED_USERS = [
   { id: '4', email: 'sarah@mfd.io', name: 'Sarah Chen', role: 'manager', department: 'Marketing', status: 'active', createdAt: '2024-08-01T10:00:00Z', lastLogin: '2025-09-14T16:45:00Z' },
   { id: '5', email: 'james@mfd.io', name: 'James Wilson', role: 'viewer', department: 'Support', status: 'inactive', createdAt: '2024-09-12T10:00:00Z' },
   { id: '6', email: 'emma@mfd.io', name: 'Emma Davis', role: 'viewer', department: 'HR', status: 'pending', createdAt: '2025-09-10T10:00:00Z' },
+  { id: '7', email: 'priya@mfd.io', name: 'Priya Patel', role: 'manager', department: 'Finance', status: 'active', createdAt: '2024-10-05T10:00:00Z', lastLogin: '2025-09-13T11:20:00Z' },
+  { id: '8', email: 'david@mfd.io', name: 'David Kim', role: 'viewer', department: 'Engineering', status: 'active', createdAt: '2024-11-18T10:00:00Z', lastLogin: '2025-09-12T09:45:00Z' },
+  { id: '9', email: 'lisa@mfd.io', name: 'Lisa Rodriguez', role: 'admin', department: 'Product', status: 'active', createdAt: '2025-01-08T10:00:00Z', lastLogin: '2025-09-11T15:10:00Z' },
+  { id: '10', email: 'michael@mfd.io', name: 'Michael Brown', role: 'viewer', department: 'Sales', status: 'inactive', createdAt: '2025-02-14T10:00:00Z' },
+  { id: '11', email: 'nina@mfd.io', name: 'Nina Okonkwo', role: 'manager', department: 'Support', status: 'active', createdAt: '2025-03-22T10:00:00Z', lastLogin: '2025-09-10T13:30:00Z' },
+  { id: '12', email: 'tom@mfd.io', name: 'Tom Anderson', role: 'viewer', department: 'Marketing', status: 'pending', createdAt: '2025-05-01T10:00:00Z' },
+  { id: '13', email: 'rachel@mfd.io', name: 'Rachel Green', role: 'viewer', department: 'Operations', status: 'active', createdAt: '2025-06-17T10:00:00Z', lastLogin: '2025-09-09T10:05:00Z' },
+  { id: '14', email: 'chris@mfd.io', name: 'Chris Taylor', role: 'manager', department: 'HR', status: 'active', createdAt: '2025-07-03T10:00:00Z', lastLogin: '2025-09-08T17:40:00Z' },
+  { id: '15', email: 'sofia@mfd.io', name: 'Sofia Martinez', role: 'viewer', department: 'Finance', status: 'active', createdAt: '2025-08-19T10:00:00Z', lastLogin: '2025-09-07T08:55:00Z' },
+  { id: '16', email: 'ryan@mfd.io', name: 'Ryan O\'Connor', role: 'viewer', department: 'Product', status: 'pending', createdAt: '2025-09-01T10:00:00Z' },
 ];
 
 /** @type {Record<string, { password: string, userId: string }>} */

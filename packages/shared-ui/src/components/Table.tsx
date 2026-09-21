@@ -11,9 +11,17 @@ interface TableProps<T> {
   keyExtractor: (row: T) => string;
   onRowClick?: (row: T) => void;
   emptyMessage?: string;
+  scrollable?: boolean;
 }
 
-export function Table<T>({ columns, data, keyExtractor, onRowClick, emptyMessage = 'No data available' }: TableProps<T>) {
+export function Table<T>({
+  columns,
+  data,
+  keyExtractor,
+  onRowClick,
+  emptyMessage = 'No data available',
+  scrollable = false,
+}: TableProps<T>) {
   if (data.length === 0) {
     return (
       <div style={{ padding: '32px', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '14px' }}>
@@ -23,8 +31,8 @@ export function Table<T>({ columns, data, keyExtractor, onRowClick, emptyMessage
   }
 
   return (
-    <div style={{ overflowX: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+    <div style={{ overflowX: scrollable ? 'auto' : 'hidden', width: '100%' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', tableLayout: 'fixed' }}>
         <thead>
           <tr>
             {columns.map((col) => (
@@ -58,7 +66,15 @@ export function Table<T>({ columns, data, keyExtractor, onRowClick, emptyMessage
               }}
             >
               {columns.map((col) => (
-                <td key={col.key} style={{ padding: '14px 16px', borderBottom: '1px solid var(--color-border)' }}>
+                <td
+                  key={col.key}
+                  style={{
+                    padding: '14px 16px',
+                    borderBottom: '1px solid var(--color-border)',
+                    overflow: 'hidden',
+                    verticalAlign: 'middle',
+                  }}
+                >
                   {col.render(row)}
                 </td>
               ))}

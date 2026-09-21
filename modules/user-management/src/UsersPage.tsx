@@ -84,7 +84,7 @@ export default function UsersPage() {
   const { data: users, total, totalPages } = usersQuery.data!;
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in mfd-users-page">
       <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: 700 }}>User Management</h1>
         <p style={{ color: 'var(--color-text-muted)', fontSize: '14px', marginTop: '4px' }}>
@@ -174,22 +174,22 @@ export default function UsersPage() {
                 key: 'name',
                 header: 'User',
                 render: (u) => (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
                     <Avatar name={u.name} size={32} />
-                    <div>
-                      <div style={{ fontWeight: 500 }}>{u.name}</div>
-                      <div style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{u.email}</div>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <div className="mfd-text-truncate" style={{ fontWeight: 500 }}>{u.name}</div>
+                      <div className="mfd-text-truncate" style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{u.email}</div>
                     </div>
                   </div>
                 ),
               },
-              { key: 'role', header: 'Role', render: (u) => <Badge variant="info">{u.role}</Badge> },
-              { key: 'department', header: 'Department', render: (u) => u.department ?? '—' },
-              { key: 'status', header: 'Status', render: (u) => <Badge variant={statusVariant(u.status)} dot>{u.status}</Badge> },
+              { key: 'role', header: 'Role', width: '96px', render: (u) => <Badge variant="info">{u.role}</Badge> },
+              { key: 'department', header: 'Department', width: '120px', render: (u) => <span className="mfd-text-truncate">{u.department ?? '—'}</span> },
+              { key: 'status', header: 'Status', width: '108px', render: (u) => <Badge variant={statusVariant(u.status)} dot>{u.status}</Badge> },
               {
                 key: 'actions',
                 header: 'Actions',
-                width: '120px',
+                width: '96px',
                 render: (u) => (
                   <div style={{ display: 'flex', gap: '4px' }}>
                     <Button variant="ghost" size="sm" onClick={() => setEditUser(u)} aria-label="Edit">
