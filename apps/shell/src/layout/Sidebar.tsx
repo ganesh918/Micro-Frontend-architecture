@@ -8,14 +8,7 @@ import {
   Layers,
 } from 'lucide-react';
 import { useIsMobile } from '@mfd/shared-utils';
-import type { NavItem } from '@mfd/shared-types';
-
-const navItems: NavItem[] = [
-  { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: 'dashboard', module: 'dashboard' },
-  { id: 'users', label: 'User Management', path: '/users', icon: 'users', module: 'user-management' },
-  { id: 'analytics', label: 'Analytics', path: '/analytics', icon: 'analytics', module: 'analytics' },
-  { id: 'notifications', label: 'Notifications', path: '/notifications', icon: 'notifications', module: 'notifications' },
-];
+import { APP_NAV_ITEMS, filterNavByRole, useAuthStore } from '@mfd/shared-auth';
 
 const iconMap: Record<string, React.ReactNode> = {
   dashboard: <LayoutDashboard size={20} />,
@@ -32,6 +25,8 @@ interface SidebarProps {
 
 export function Sidebar({ open, onClose, badges }: SidebarProps) {
   const isMobile = useIsMobile();
+  const hasRole = useAuthStore((s) => s.hasRole);
+  const navItems = filterNavByRole(APP_NAV_ITEMS, hasRole);
 
   return (
     <aside

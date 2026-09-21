@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Search, Pencil, Trash2 } from 'lucide-react';
+import { useAuthStore } from '@mfd/shared-auth';
 import { api, publishEvent, useDebounce, useIsMobile } from '@mfd/shared-utils';
 import type { PaginatedResponse, User } from '@mfd/shared-types';
 import {
@@ -11,6 +12,7 @@ import {
 export default function UsersPage() {
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
+  const canManageUsers = useAuthStore((s) => s.hasRole('admin', 'manager'));
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -71,7 +73,7 @@ export default function UsersPage() {
     );
   }
   if (usersQuery.isError) {
-    return <ErrorState title="Failed to load users" onRetry={() => usersQuery.refetch()} />;
+    return <ErrorState title="Failed to load users" onRetry={() => { void usersQuery.refetch(); }} />;
   }
 
   const { data: users, total, totalPages } = usersQuery.data!;
@@ -151,10 +153,12 @@ export default function UsersPage() {
                   <Badge variant="info">{u.role}</Badge>
                   {u.department && <span style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{u.department}</span>}
                 </div>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <Button variant="outline" size="sm" onClick={() => setEditUser(u)}>Edit</Button>
-                  <Button variant="ghost" size="sm" onClick={() => setDeleteConfirm(u)}>Delete</Button>
-                </div>
+                {canManageUsers && (
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <Button variant="outline" size="sm" onClick={() => setEditUser(u)}>Edit</Button>
+                    <Button variant="ghost" size="sm" onClick={() => setDeleteConfirm(u)}>Delete</Button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -179,21 +183,23 @@ export default function UsersPage() {
               { key: 'role', header: 'Role', render: (u) => <Badge variant="info">{u.role}</Badge> },
               { key: 'department', header: 'Department', render: (u) => u.department ?? '—' },
               { key: 'status', header: 'Status', render: (u) => <Badge variant={statusVariant(u.status)} dot>{u.status}</Badge> },
-              {
-                key: 'actions',
-                header: 'Actions',
-                width: '120px',
-                render: (u) => (
-                  <div style={{ display: 'flex', gap: '4px' }}>
-                    <Button variant="ghost" size="sm" onClick={() => setEditUser(u)} aria-label="Edit">
-                      <Pencil size={14} />
-                    </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setDeleteConfirm(u)} aria-label="Delete">
-                      <Trash2 size={14} />
-                    </Button>
-                  </div>
-                ),
-              },
+              ...(canManageUsers
+                ? [{
+                    key: 'actions',
+                    header: 'Actions',
+                    width: '120px',
+                    render: (u: User) => (
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        <Button variant="ghost" size="sm" onClick={() => setEditUser(u)} aria-label="Edit">
+                          <Pencil size={14} />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => setDeleteConfirm(u)} aria-label="Delete">
+                          <Trash2 size={14} />
+                        </Button>
+                      </div>
+                    ),
+                  }]
+                : []),
             ]}
           />
         )}

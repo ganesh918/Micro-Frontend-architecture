@@ -58,7 +58,7 @@ export default function NotificationsPage() {
     );
   }
   if (notificationsQuery.isError) {
-    return <ErrorState title="Failed to load notifications" onRetry={() => notificationsQuery.refetch()} />;
+    return <ErrorState title="Failed to load notifications" onRetry={() => { void notificationsQuery.refetch(); }} />;
   }
 
   const notifications = notificationsQuery.data ?? [];

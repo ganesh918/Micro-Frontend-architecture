@@ -222,7 +222,7 @@ export default function DashboardPage() {
 
       {/* Header */}
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+      <div className="mfd-page-header">
 
         <div>
 
@@ -283,7 +283,7 @@ export default function DashboardPage() {
 
       ) : (
 
-        <div className="stagger-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+        <div className="stagger-grid mfd-grid-metrics">
 
           {metrics.map((metric) => (
 
@@ -355,7 +355,7 @@ export default function DashboardPage() {
 
       {summary && (
 
-        <div className="stagger-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '24px' }}>
+        <div className="stagger-cards mfd-grid-2">
 
           <Card title="Goal Progress" subtitle="Monthly targets" padding="md">
 
@@ -397,16 +397,7 @@ export default function DashboardPage() {
 
       {/* System Health + Recent Activity */}
 
-      <div
-        className="stagger-cards"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-          gap: '24px',
-          marginBottom: '24px',
-          alignItems: 'start',
-        }}
-      >
+      <div className="stagger-cards mfd-grid-auto">
 
         {summary && (
 

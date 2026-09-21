@@ -134,7 +134,7 @@ export default function AnalyticsPage() {
 
   if (isError) {
 
-    return <ErrorState title="Failed to load analytics" onRetry={() => { reportsQuery.refetch(); overviewQuery.refetch(); }} />;
+    return <ErrorState title="Failed to load analytics" onRetry={() => { void reportsQuery.refetch(); void overviewQuery.refetch(); }} />;
 
   }
 
@@ -174,7 +174,7 @@ export default function AnalyticsPage() {
 
       {/* Header */}
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+      <div className="mfd-page-header">
 
         <div>
 
@@ -244,7 +244,7 @@ export default function AnalyticsPage() {
 
       {/* Overview KPIs */}
 
-      <div className="stagger-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+      <div className="stagger-grid mfd-grid-metrics">
 
         {overview.summaryMetrics.map((metric) => (
 
@@ -274,7 +274,7 @@ export default function AnalyticsPage() {
 
       {/* Funnel + Channels */}
 
-      <div className="stagger-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '24px' }}>
+      <div className="stagger-cards mfd-grid-2">
 
         <Card title="Conversion Funnel" subtitle="Visitor to purchase journey">
 
@@ -294,7 +294,7 @@ export default function AnalyticsPage() {
 
       {/* Device breakdown + Hourly/period trend */}
 
-      <div className="stagger-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '24px' }}>
+      <div className="stagger-cards mfd-grid-2">
 
         <Card title="Device Breakdown" subtitle="Sessions by device type">
 
@@ -371,7 +371,7 @@ export default function AnalyticsPage() {
 
 
 
-          <div className="stagger-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+          <div className="stagger-grid mfd-grid-metrics">
 
             {activeReport.metrics.map((metric) => (
 

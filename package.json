@@ -17,15 +17,25 @@
     "build": "npm run build -w @mfd/shared-types && npm run build -w @mfd/shared-utils && npm run build -w @mfd/shared-auth && npm run build -w @mfd/shared-ui && npm run build -w @mfd/auth && npm run build -w @mfd/dashboard && npm run build -w @mfd/user-management && npm run build -w @mfd/analytics && npm run build -w @mfd/notifications && npm run build -w @mfd/shell",
     "build:vercel": "node scripts/build-vercel.mjs",
     "preview": "npm run preview -w @mfd/shell",
-    "lint": "npm run lint --workspaces --if-present"
+    "lint": "eslint . && npm run lint --workspaces --if-present",
+    "typecheck": "tsc --noEmit -p apps/shell && tsc --noEmit -p modules/auth && tsc --noEmit -p modules/dashboard && tsc --noEmit -p modules/user-management && tsc --noEmit -p modules/analytics && tsc --noEmit -p modules/notifications",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@vitest/coverage-v8": "^3.0.5",
     "concurrently": "^9.1.2",
+    "eslint": "^9.19.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "jsdom": "^26.0.0",
     "typescript": "^5.7.3",
+    "typescript-eslint": "^8.22.0",
+    "vitest": "^3.0.5",
     "wait-on": "^8.0.5"
   },
   "engines": {

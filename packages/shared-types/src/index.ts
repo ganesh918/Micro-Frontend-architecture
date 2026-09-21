@@ -180,4 +180,6 @@ export interface NavItem {
   icon: string;
   module: ModuleName;
   badge?: number;
+  /** When set, only these roles see the nav item and can access the route */
+  roles?: User['role'][];
 }
