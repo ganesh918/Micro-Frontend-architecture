@@ -6,12 +6,12 @@ export type Theme = 'light' | 'dark';
 const STORAGE_KEY = 'mfd-theme';
 
 function readStoredTheme(): Theme {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'dark';
 
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored === 'light' || stored === 'dark') return stored;
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'dark';
 }
 
 export function applyTheme(theme: Theme): void {
@@ -58,7 +58,7 @@ export function useTheme() {
   const theme = useSyncExternalStore(
     themeManager.subscribe,
     themeManager.getTheme,
-    () => 'light' as Theme,
+    () => 'dark' as Theme,
   );
 
   return {
