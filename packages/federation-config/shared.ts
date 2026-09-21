@@ -16,8 +16,30 @@ const REMOTE_PORTS: Record<string, number> = {
   notifications: 5005,
 };
 
+const REMOTE_PATHS: Record<string, string> = {
+  auth: '/auth',
+  dashboard: '/dashboard',
+  userManagement: '/user-management',
+  analytics: '/analytics',
+  notifications: '/notifications',
+};
+
 export function getRemoteEntries(baseUrl?: string): Record<string, string> {
-  const base = baseUrl ?? import.meta.env?.VITE_REMOTE_BASE_URL ?? 'http://localhost';
+  const configuredBase = baseUrl ?? import.meta.env?.VITE_REMOTE_BASE_URL;
+
+  // Production (Vercel): serve remotes as static subfolders on the same origin
+  if (import.meta.env?.PROD && configuredBase !== 'http://localhost') {
+    const origin = (configuredBase ?? '').replace(/\/$/, '');
+    return Object.fromEntries(
+      Object.entries(REMOTE_PATHS).map(([name, remotePath]) => [
+        name,
+        `${origin}${remotePath}/assets/remoteEntry.js`,
+      ])
+    );
+  }
+
+  // Development: each remote runs on its own port
+  const base = configuredBase ?? 'http://localhost';
   return Object.fromEntries(
     Object.entries(REMOTE_PORTS).map(([name, port]) => [
       name,

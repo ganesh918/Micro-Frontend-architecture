@@ -15,6 +15,7 @@
     "build:remotes": "concurrently -n auth,dash,users,analytics,notif -c green,yellow,magenta,cyan,red \"npm run build -w @mfd/auth\" \"npm run build -w @mfd/dashboard\" \"npm run build -w @mfd/user-management\" \"npm run build -w @mfd/analytics\" \"npm run build -w @mfd/notifications\"",
     "dev:shell": "npm run dev -w @mfd/shell",
     "build": "npm run build -w @mfd/shared-types && npm run build -w @mfd/shared-utils && npm run build -w @mfd/shared-auth && npm run build -w @mfd/shared-ui && npm run build -w @mfd/auth && npm run build -w @mfd/dashboard && npm run build -w @mfd/user-management && npm run build -w @mfd/analytics && npm run build -w @mfd/notifications && npm run build -w @mfd/shell",
+    "build:vercel": "node scripts/build-vercel.mjs",
     "preview": "npm run preview -w @mfd/shell",
     "lint": "npm run lint --workspaces --if-present"
   },

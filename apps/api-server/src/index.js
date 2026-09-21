@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -554,6 +555,12 @@ app.patch('/api/notifications/read-all', async (_req, res) => {
   res.json({ success: true });
 });
 
-app.listen(PORT, () => {
-  console.log(`API server running at http://localhost:${PORT}`);
-});
+export default app;
+
+const isMainModule = process.argv[1] === fileURLToPath(import.meta.url);
+
+if (isMainModule) {
+  app.listen(PORT, () => {
+    console.log(`API server running at http://localhost:${PORT}`);
+  });
+}
