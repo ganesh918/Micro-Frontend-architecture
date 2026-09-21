@@ -5,8 +5,13 @@
   "outputDirectory": "apps/shell/dist",
   "installCommand": "npm install",
   "framework": null,
+  "functions": {
+    "api/**/*.mjs": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

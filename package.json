@@ -19,6 +19,10 @@
     "preview": "npm run preview -w @mfd/shell",
     "lint": "npm run lint --workspaces --if-present"
   },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
   "devDependencies": {
     "concurrently": "^9.1.2",
     "typescript": "^5.7.3",

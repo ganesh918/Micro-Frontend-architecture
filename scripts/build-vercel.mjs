@@ -19,19 +19,30 @@ function run(command, extraEnv = {}) {
     cwd: root,
     stdio: 'inherit',
     env: { ...process.env, ...extraEnv },
+    shell: true,
   });
 }
 
-console.log('Step 1/2: Building remote modules...');
-run('npm run build -w @mfd/auth && npm run build -w @mfd/dashboard && npm run build -w @mfd/user-management && npm run build -w @mfd/analytics && npm run build -w @mfd/notifications');
+console.log('Step 1/3: Building remote modules...');
+run('npm run build:remotes');
 
-console.log('Step 2/2: Building shell for production...');
+console.log('Step 2/3: Building shell for production...');
 run('npm run build -w @mfd/shell', {
   VITE_REMOTE_BASE_URL: '',
   VITE_API_BASE_URL: '/api',
 });
 
 const shellDist = path.join(root, 'apps/shell/dist');
+const apiDir = path.join(root, 'api');
+const apiServerSrc = path.join(root, 'apps/api-server/src/index.js');
+
+console.log('Step 3/3: Packaging static remotes and API for Vercel...');
+
+if (!existsSync(apiServerSrc)) {
+  throw new Error(`Missing API source: ${apiServerSrc}`);
+}
+
+cpSync(apiServerSrc, path.join(apiDir, 'server.js'));
 
 for (const { module, dest } of remotes) {
   const src = path.join(root, 'modules', module, 'dist');
