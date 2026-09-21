@@ -1,0 +1,29 @@
+{
+  "name": "micro-frontend-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-oriented Micro-Frontend Dashboard with Module Federation",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "modules/*"
+  ],
+  "scripts": {
+    "predev": "npm run kill-ports && npm run build:remotes",
+    "dev": "concurrently -n api,auth,dash,users,analytics,notif,shell -c gray,green,yellow,magenta,cyan,red,blue \"npm run dev -w @mfd/api-server\" \"npm run dev -w @mfd/auth\" \"npm run dev -w @mfd/dashboard\" \"npm run dev -w @mfd/user-management\" \"npm run dev -w @mfd/analytics\" \"npm run dev -w @mfd/notifications\" \"npm run dev:delayed -w @mfd/shell\"",
+    "kill-ports": "powershell -ExecutionPolicy Bypass -File scripts/kill-ports.ps1",
+    "build:remotes": "concurrently -n auth,dash,users,analytics,notif -c green,yellow,magenta,cyan,red \"npm run build -w @mfd/auth\" \"npm run build -w @mfd/dashboard\" \"npm run build -w @mfd/user-management\" \"npm run build -w @mfd/analytics\" \"npm run build -w @mfd/notifications\"",
+    "dev:shell": "npm run dev -w @mfd/shell",
+    "build": "npm run build -w @mfd/shared-types && npm run build -w @mfd/shared-utils && npm run build -w @mfd/shared-auth && npm run build -w @mfd/shared-ui && npm run build -w @mfd/auth && npm run build -w @mfd/dashboard && npm run build -w @mfd/user-management && npm run build -w @mfd/analytics && npm run build -w @mfd/notifications && npm run build -w @mfd/shell",
+    "preview": "npm run preview -w @mfd/shell",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3",
+    "wait-on": "^8.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
