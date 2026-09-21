@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
       react(),
       federation({
         name: 'shell',
-        remotes: getRemoteEntries(env.VITE_REMOTE_BASE_URL),
+        remotes: getRemoteEntries(env.VITE_REMOTE_BASE_URL, isProd),
         shared: federationShared,
       }),
     ],
