@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { Menu, LogOut, Bell } from 'lucide-react';
+import { Menu, LogOut, Bell, Moon, Sun } from 'lucide-react';
 import { useAuthStore } from '@mfd/shared-auth';
 import { Avatar, Badge, Button } from '@mfd/shared-ui';
 import { useQuery } from '@tanstack/react-query';
-import { api, useIsMobile } from '@mfd/shared-utils';
+import { api, useIsMobile, useTheme } from '@mfd/shared-utils';
 import type { Notification } from '@mfd/shared-types';
 
 interface HeaderProps {
@@ -15,6 +15,7 @@ export function Header({ onMenuClick, onLogout }: HeaderProps) {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { session } = useAuthStore();
+  const { isDark, toggleTheme } = useTheme();
   const user = session?.user;
 
   const { data: notifications } = useQuery({
@@ -50,6 +51,21 @@ export function Header({ onMenuClick, onLogout }: HeaderProps) {
       </button>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '16px' }}>
+        <button
+          onClick={toggleTheme}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            padding: '8px',
+            display: 'flex',
+          }}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={isDark ? 'Light mode' : 'Dark mode'}
+        >
+          {isDark ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+
         <button
           onClick={() => navigate('/notifications')}
           style={{

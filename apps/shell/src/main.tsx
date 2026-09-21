@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider, useAuthStore } from '@mfd/shared-auth';
-import { registerUnauthorizedHandler, publishEvent } from '@mfd/shared-utils';
+import { initTheme, registerUnauthorizedHandler, publishEvent } from '@mfd/shared-utils';
 import { ToastContainer } from '@mfd/shared-ui';
 import '@mfd/shared-ui/styles/global.css';
 import App from './App';
@@ -23,6 +23,8 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+initTheme();
 
 registerUnauthorizedHandler(() => {
   useAuthStore.getState().logout();

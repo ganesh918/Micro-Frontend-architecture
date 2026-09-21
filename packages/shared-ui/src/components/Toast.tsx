@@ -18,10 +18,10 @@ const icons: Record<ToastType, React.ReactNode> = {
 };
 
 const colors: Record<ToastType, { bg: string; border: string; text: string }> = {
-  success: { bg: '#ecfdf5', border: '#10b981', text: '#065f46' },
-  error: { bg: '#fef2f2', border: '#ef4444', text: '#991b1b' },
-  info: { bg: '#eff6ff', border: '#3b82f6', text: '#1e40af' },
-  warning: { bg: '#fffbeb', border: '#f59e0b', text: '#92400e' },
+  success: { bg: 'var(--badge-success-bg)', border: 'var(--color-success)', text: 'var(--badge-success-text)' },
+  error: { bg: 'var(--badge-error-bg)', border: 'var(--color-error)', text: 'var(--badge-error-text)' },
+  info: { bg: 'var(--badge-info-bg)', border: 'var(--color-primary)', text: 'var(--badge-info-text)' },
+  warning: { bg: 'var(--badge-warning-bg)', border: 'var(--color-warning)', text: 'var(--badge-warning-text)' },
 };
 
 export function ToastContainer() {

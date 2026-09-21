@@ -447,8 +447,6 @@ export default function DashboardPage() {
 
           padding: '16px 20px',
 
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(14,165,233,0.08) 100%)',
-
           borderRadius: 'var(--radius-lg)',
 
           border: '1px solid var(--color-border)',

@@ -31,6 +31,7 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
 
   return (
     <aside
+      className="mfd-sidebar"
       style={{
         position: 'fixed',
         top: 0,
@@ -38,23 +39,24 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
         width: 'var(--sidebar-width)',
         height: '100vh',
         background: 'var(--color-sidebar)',
-        color: '#e2e8f0',
+        color: 'var(--color-sidebar-text-active)',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'transform var(--transition-smooth), box-shadow var(--transition-smooth)',
+        transition: 'transform var(--transition-smooth), box-shadow var(--transition-smooth), background-color var(--transition-smooth), color var(--transition-smooth)',
         overflow: 'hidden',
         zIndex: isMobile ? 100 : 50,
         transform: open ? 'translateX(0)' : 'translateX(-100%)',
-        boxShadow: open && !isMobile ? 'var(--shadow-lg)' : open && isMobile ? 'var(--shadow-lg)' : 'none',
+        boxShadow: open ? 'var(--shadow-lg)' : 'none',
+        borderRight: '1px solid var(--color-sidebar-border)',
       }}
     >
-      <div style={{ padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--color-sidebar-border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Layers size={24} color="#818cf8" />
+          <Layers size={24} color="var(--color-sidebar-brand)" />
           <span style={{ fontWeight: 700, fontSize: '18px', whiteSpace: 'nowrap' }}>MFD Platform</span>
         </div>
         {isMobile && (
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#94a3b8', padding: '4px' }}>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--color-sidebar-text)', padding: '4px' }}>
             <X size={20} />
           </button>
         )}
@@ -72,7 +74,7 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
                 `sidebar-nav-link${isActive ? ' sidebar-nav-link--active' : ''}`
               }
               style={({ isActive }) => ({
-                color: isActive ? '#fff' : '#94a3b8',
+                color: isActive ? 'var(--color-sidebar-text-active)' : 'var(--color-sidebar-text)',
                 background: isActive ? 'var(--color-sidebar-hover)' : 'transparent',
               })}
             >
@@ -81,7 +83,7 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
               {badge != null && badge > 0 && (
                 <span
                   style={{
-                    background: '#ef4444',
+                    background: 'var(--color-error)',
                     color: '#fff',
                     fontSize: '11px',
                     fontWeight: 600,
@@ -99,7 +101,7 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
         })}
       </nav>
 
-      <div style={{ padding: '12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ padding: '12px', borderTop: '1px solid var(--color-sidebar-border)' }}>
         <button
           type="button"
           className="sidebar-nav-link sidebar-nav-link--logout"
@@ -113,7 +115,7 @@ export function Sidebar({ open, onClose, badges, onLogout }: SidebarProps) {
         </button>
       </div>
 
-      <div style={{ padding: '12px 24px 16px', fontSize: '12px', color: '#64748b' }}>
+      <div style={{ padding: '12px 24px 16px', fontSize: '12px', color: 'var(--color-sidebar-muted)' }}>
         Micro-Frontend v1.0
       </div>
     </aside>

@@ -42,7 +42,7 @@ export function Modal({ open, onClose, title, children, footer, size = 'md' }: M
     >
       <div
         onClick={onClose}
-        style={{ position: 'absolute', inset: 0, background: 'rgba(15, 23, 42, 0.5)', backdropFilter: 'blur(4px)' }}
+        style={{ position: 'absolute', inset: 0, background: 'var(--color-modal-backdrop)', backdropFilter: 'blur(4px)' }}
       />
       <div
         className="animate-fade-in"
