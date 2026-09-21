@@ -75,6 +75,21 @@ let notifications = [
   { id: 'n3', title: 'High Traffic Alert', message: 'API response times exceeded threshold.', type: 'warning', read: false, createdAt: '2025-09-16T22:00:00Z' },
   { id: 'n4', title: 'Backup Complete', message: 'Daily database backup finished.', type: 'success', read: true, createdAt: '2025-09-16T03:00:00Z' },
   { id: 'n5', title: 'Failed Login Attempts', message: 'Multiple failed login attempts detected.', type: 'error', read: true, createdAt: '2025-09-15T18:00:00Z' },
+  { id: 'n6', title: 'New User Registration', message: 'Ryan O\'Connor signed up and is pending review.', type: 'info', read: false, createdAt: '2025-09-17T05:45:00Z' },
+  { id: 'n7', title: 'Analytics Report Ready', message: 'Your weekly performance report is ready to download.', type: 'info', read: false, createdAt: '2025-09-17T04:20:00Z' },
+  { id: 'n8', title: 'Role Updated', message: 'Sarah Chen\'s role was changed to Manager.', type: 'info', read: false, createdAt: '2025-09-16T20:15:00Z' },
+  { id: 'n9', title: 'Storage Warning', message: 'Disk usage reached 85% on the primary server.', type: 'warning', read: false, createdAt: '2025-09-16T19:00:00Z' },
+  { id: 'n10', title: 'Export Completed', message: 'User list exported to CSV successfully.', type: 'success', read: true, createdAt: '2025-09-16T17:30:00Z' },
+  { id: 'n11', title: 'New User Registration', message: 'Tom Anderson joined the Marketing team.', type: 'info', read: true, createdAt: '2025-09-16T15:10:00Z' },
+  { id: 'n12', title: 'Payment Gateway Error', message: 'Stripe webhook delivery failed 3 times.', type: 'error', read: false, createdAt: '2025-09-16T14:05:00Z' },
+  { id: 'n13', title: 'Scheduled Maintenance', message: 'Maintenance window scheduled for Sep 20, 2:00 AM UTC.', type: 'warning', read: true, createdAt: '2025-09-16T12:00:00Z' },
+  { id: 'n14', title: 'Security Scan Complete', message: 'No vulnerabilities found in the latest dependency scan.', type: 'success', read: true, createdAt: '2025-09-16T09:30:00Z' },
+  { id: 'n15', title: 'User Deactivated', message: 'James Wilson\'s account was set to inactive.', type: 'warning', read: true, createdAt: '2025-09-15T16:45:00Z' },
+  { id: 'n16', title: 'New Comment', message: 'Lisa Rodriguez commented on the Q3 roadmap document.', type: 'info', read: true, createdAt: '2025-09-15T14:20:00Z' },
+  { id: 'n17', title: 'Integration Connected', message: 'Slack workspace linked successfully.', type: 'success', read: false, createdAt: '2025-09-15T11:00:00Z' },
+  { id: 'n18', title: 'API Rate Limit', message: 'Analytics API hit 90% of its hourly rate limit.', type: 'warning', read: true, createdAt: '2025-09-14T23:40:00Z' },
+  { id: 'n19', title: 'Password Reset Request', message: 'David Kim requested a password reset link.', type: 'info', read: true, createdAt: '2025-09-14T20:15:00Z' },
+  { id: 'n20', title: 'Deployment Failed', message: 'Staging deploy for notifications module failed.', type: 'error', read: true, createdAt: '2025-09-14T18:00:00Z' },
 ];
 
 const activities = [
