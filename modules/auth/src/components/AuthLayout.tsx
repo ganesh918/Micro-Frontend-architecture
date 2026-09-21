@@ -20,9 +20,7 @@ export function AuthLayout({ title, subtitle, children, footer }: AuthLayoutProp
         alignItems: 'center',
         justifyContent: 'center',
         padding: '24px',
-        background: isDark
-          ? 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)'
-          : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'var(--color-auth-gradient)',
         position: 'relative',
       }}
     >
