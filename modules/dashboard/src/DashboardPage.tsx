@@ -473,10 +473,12 @@ export default function DashboardPage() {
 
         </p>
 
-        <Button variant="outline" size="sm" onClick={() => publishEvent('analytics:export', { reportId: 'r1' }, 'dashboard')}>
-
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => publishEvent('analytics:export', { reportId: 'r1' }, 'dashboard')}
+        >
           View Full Report
-
         </Button>
 
       </div>

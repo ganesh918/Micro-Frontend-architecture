@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@mfd/shared-utils';
 import { subscribeEvent } from '@mfd/shared-utils';
 import { useAuthStore } from '@mfd/shared-auth';
@@ -8,6 +8,7 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 
 export function AppLayout() {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
   const [badges, setBadges] = useState<Record<string, number>>({});
@@ -28,11 +29,11 @@ export function AppLayout() {
     const unsubLogout = subscribeEvent('auth:logout', () => {
       setBadges({});
     });
-    const unsubAnalytics = subscribeEvent('analytics:export', () => {
-      /* shell acknowledges cross-module export events */
+    const unsubAnalytics = subscribeEvent('analytics:export', (event) => {
+      navigate(`/analytics?report=${event.payload.reportId}`);
     });
     return () => { unsubBadge(); unsubNotif(); unsubLogout(); unsubAnalytics(); };
-  }, []);
+  }, [navigate]);
 
   const sidebarOffset = !isMobile && sidebarOpen ? 'var(--sidebar-width)' : '0';
 

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -63,6 +64,8 @@ export default function AnalyticsPage() {
   const [selectedReport, setSelectedReport] = useState<string | null>(null);
 
   const [period, setPeriod] = useState<Period>('30d');
+  const [searchParams] = useSearchParams();
+  const reportsSectionRef = useRef<HTMLDivElement>(null);
 
 
 
@@ -99,6 +102,22 @@ export default function AnalyticsPage() {
   const isLoading = reportsQuery.isLoading || overviewQuery.isLoading;
 
   const isError = reportsQuery.isError || overviewQuery.isError;
+
+  useEffect(() => {
+    const reportId = searchParams.get('report');
+    const reports = reportsQuery.data;
+    if (!reportId || !reports?.length) return;
+
+    if (reports.some((report) => report.id === reportId)) {
+      setSelectedReport(reportId);
+    }
+  }, [searchParams, reportsQuery.data]);
+
+  useEffect(() => {
+    if (!searchParams.get('report') || !selectedReport) return;
+
+    reportsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [searchParams, selectedReport]);
 
 
 
@@ -334,7 +353,7 @@ export default function AnalyticsPage() {
 
       {/* Report tabs */}
 
-      <div style={{ marginBottom: '16px' }}>
+      <div ref={reportsSectionRef} style={{ marginBottom: '16px' }}>
 
         <h2 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '12px' }}>Detailed Reports</h2>
 
