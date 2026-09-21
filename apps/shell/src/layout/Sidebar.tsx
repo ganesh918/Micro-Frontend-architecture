@@ -8,7 +8,7 @@ import {
   Layers,
 } from 'lucide-react';
 import { useIsMobile } from '@mfd/shared-utils';
-import { APP_NAV_ITEMS, filterNavByRole, useAuthStore } from '@mfd/shared-auth';
+import { APP_NAV_ITEMS } from '@mfd/shared-auth';
 
 const iconMap: Record<string, React.ReactNode> = {
   dashboard: <LayoutDashboard size={20} />,
@@ -25,8 +25,7 @@ interface SidebarProps {
 
 export function Sidebar({ open, onClose, badges }: SidebarProps) {
   const isMobile = useIsMobile();
-  const hasRole = useAuthStore((s) => s.hasRole);
-  const navItems = filterNavByRole(APP_NAV_ITEMS, hasRole);
+  const navItems = APP_NAV_ITEMS;
 
   return (
     <aside

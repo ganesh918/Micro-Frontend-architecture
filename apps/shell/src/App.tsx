@@ -40,17 +40,13 @@ export default function App() {
           <Route
             path="users"
             element={
-              <ProtectedRoute roles={['admin', 'manager']}>
-                <RemoteRoute moduleName="User Management" loader={() => import('userManagement/UsersPage')} />
-              </ProtectedRoute>
+              <RemoteRoute moduleName="User Management" loader={() => import('userManagement/UsersPage')} />
             }
           />
           <Route
             path="analytics"
             element={
-              <ProtectedRoute roles={['admin', 'manager']}>
-                <RemoteRoute moduleName="Analytics" loader={() => import('analytics/AnalyticsPage')} />
-              </ProtectedRoute>
+              <RemoteRoute moduleName="Analytics" loader={() => import('analytics/AnalyticsPage')} />
             }
           />
           <Route

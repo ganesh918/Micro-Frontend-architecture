@@ -7,13 +7,13 @@ describe('navigation RBAC', () => {
     expect(items).toHaveLength(4);
   });
 
-  it('hides restricted items from viewer', () => {
+  it('shows all items to viewer when no roles are configured', () => {
     const items = filterNavByRole(APP_NAV_ITEMS, (...roles) => roles.includes('viewer'));
-    expect(items.map((item) => item.id)).toEqual(['dashboard', 'notifications']);
+    expect(items).toHaveLength(4);
   });
 
-  it('allows manager to access user management', () => {
-    expect(canAccessRoute('/users', 'manager')).toBe(true);
-    expect(canAccessRoute('/users', 'viewer')).toBe(false);
+  it('allows any role to access all routes by default', () => {
+    expect(canAccessRoute('/users', 'viewer')).toBe(true);
+    expect(canAccessRoute('/analytics', 'viewer')).toBe(true);
   });
 });

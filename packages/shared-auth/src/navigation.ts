@@ -8,7 +8,6 @@ export const APP_NAV_ITEMS: NavItem[] = [
     path: '/users',
     icon: 'users',
     module: 'user-management',
-    roles: ['admin', 'manager'],
   },
   {
     id: 'analytics',
@@ -16,7 +15,6 @@ export const APP_NAV_ITEMS: NavItem[] = [
     path: '/analytics',
     icon: 'analytics',
     module: 'analytics',
-    roles: ['admin', 'manager'],
   },
   {
     id: 'notifications',
