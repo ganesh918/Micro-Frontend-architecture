@@ -375,21 +375,38 @@ export default function DashboardPage() {
 
 
 
-      {/* Top Products + System Health + Activity */}
+      {/* Top Products — full width so the table has room */}
 
-      <div className="stagger-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '24px' }}>
+      {summary && (
 
-        {summary && (
+        <Card
+          title="Top Products"
+          subtitle="By revenue this month"
+          padding="none"
+          className="stagger-cards"
+          style={{ marginBottom: '24px' }}
+        >
 
-          <Card title="Top Products" subtitle="By revenue this month" padding="none" style={{ gridColumn: 'span 1' }}>
+          <TopProductsTable products={summary.topProducts} />
 
-            <TopProductsTable products={summary.topProducts} />
+        </Card>
 
-          </Card>
-
-        )}
+      )}
 
 
+
+      {/* System Health + Recent Activity */}
+
+      <div
+        className="stagger-cards"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+          gap: '24px',
+          marginBottom: '24px',
+          alignItems: 'start',
+        }}
+      >
 
         {summary && (
 
